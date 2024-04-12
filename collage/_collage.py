@@ -6,6 +6,8 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 import requests
+from PIL import Image
+from urllib import request
 
 
 def get_contributors(organization, repository, github_username=None, github_token=None):
@@ -42,7 +44,9 @@ def generate_figure(contributors, ncols=7):
     for ax in axes.ravel():
         ax.set_axis_off()
     for contributor, ax in zip(contributors, axes.ravel()):
-        ax.imshow(plt.imread(f"https://github.com/{contributor}.png"))
+        url = f"https://github.com/{contributor}.png"
+        image = np.array(Image.open(request.urlopen(url)))
+        ax.imshow(image)
         ax.set(title=contributor)
     return fig
 

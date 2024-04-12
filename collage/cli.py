@@ -65,9 +65,6 @@ def cli(
     gh_username,
     gh_token,
 ):
-    # ignore_contributors = ["quantifiedcode-bot", "thibaut-kobold", "cgohlke"]
-    # include_contributors = ["leonfoks"]
-
     from ._collage import get_contributors, get_authors, generate_figure  # lazy imports
 
     # Sanitize inputs

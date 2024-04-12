@@ -117,7 +117,6 @@ def cli(
     click.echo("-----------------------")
     for contributor in contributors:
         click.echo(f"- {contributor}")
-    click.echo()
 
     # Generate image
     click.echo("\nGenerating image...")

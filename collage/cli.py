@@ -85,24 +85,25 @@ def cli(
     repositories = [r.strip() for r in repositories.split(",")]
 
     if ignore is None:
-        ignore = []
+        ignore = set()
     else:
-        ignore = [c.strip() for c in ignore.split(",")]
+        ignore = set([c.strip() for c in ignore.split(",")])
     if extend_ignore is None:
-        extend_ignore = []
+        extend_ignore = set()
     else:
-        extend_ignore = [c.strip() for c in extend_ignore.split(",")]
-    ignore_contributors = list(set(ignore + extend_ignore))
+        extend_ignore = set([c.strip() for c in extend_ignore.split(",")])
+    ignore_contributors = ignore | extend_ignore  # union of the two sets
 
     if include is None:
-        include = []
+        include = set()
     else:
-        include = [c.strip() for c in include.split(",")]
+        include = set([c.strip() for c in include.split(",")])
 
     # Get contributors
     contributors = []
     for repo in repositories:
         contributors += get_contributors(organization, repo, gh_username, gh_token)
+    contributors = set(contributors)
 
     # Get authors
     authors = []
@@ -113,17 +114,19 @@ def cli(
             click.echo(e, err=True)
         else:
             authors += new_authors
+    authors = set(authors)
 
     # Put them together
-    contributors = list(set(contributors + authors))
+    contributors |= authors  # union of the two sets
 
     # Remove unwanted ones
-    contributors = [c for c in contributors if c not in ignore_contributors]
+    contributors -= ignore_contributors  # remove contributors that should be ignored
 
     # Add required ones
-    contributors += include
+    contributors |= include
 
     # Sort them with a case-insensitive manner
+    contributors = list(contributors)
     contributors.sort(key=lambda s: s.lower())
 
     # Verbose

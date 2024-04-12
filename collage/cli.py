@@ -37,6 +37,12 @@ import requests
     help="Include these contributors to the collage",
 )
 @click.option(
+    "--ncols",
+    default=7,
+    show_default=True,
+    help="Number of columns used in the collage picture",
+)
+@click.option(
     "--gh-username",
     default=None,
     show_default=True,
@@ -55,6 +61,7 @@ def cli(
     ignore,
     extend_ignore,
     include,
+    ncols,
     gh_username,
     gh_token,
 ):
@@ -113,6 +120,6 @@ def cli(
     for contributor in contributors:
         click.echo(f"- {contributor}")
 
-    fig = generate_figure(contributors)
+    fig = generate_figure(contributors, ncols=ncols)
     fig.savefig(image, dpi=72, bbox_inches="tight", pad_inches=0.1)
     click.echo(f"Done! 🎉 Collage image saved in {image}")

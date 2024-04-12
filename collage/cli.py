@@ -13,7 +13,7 @@ import requests
 )
 @click.option(
     "--repositories",
-    "-o",
+    "-r",
     default="simpeg,discretize,pydiso,geoana,aurora,pymatsolver",
     show_default=True,
     help="List of repositories",

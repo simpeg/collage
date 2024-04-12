@@ -5,3 +5,5 @@ __pycache__
 benchmarker/_version.py
 *.swp
 *.un~
+build
+_version.py

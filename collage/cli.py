@@ -125,4 +125,4 @@ def cli(
 
     # Save image
     fig.savefig(image, dpi=72, bbox_inches="tight", pad_inches=0.1)
-    click.echo(f"\nDone! 🎉 Collage image saved in {image}")
+    click.echo(f"\nDone! 🎉 Collage image saved in '{image.name}'.")

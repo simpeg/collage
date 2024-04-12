@@ -88,7 +88,3 @@ def main():
 
     fig = generate_figure(contributors)
     fig.savefig("SimPEG_Contributors.png", dpi=72, bbox_inches="tight", pad_inches=0.1)
-
-
-if __name__ == "__main__":
-    main()

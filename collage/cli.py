@@ -112,11 +112,17 @@ def cli(
     # Sort them with a case-insensitive manner
     contributors.sort(key=lambda s: s.lower())
 
-    click.echo("Collected contributors:")
+    # Verbose
+    click.echo("\nCollected contributors:")
     click.echo("-----------------------")
     for contributor in contributors:
         click.echo(f"- {contributor}")
+    click.echo()
 
+    # Generate image
+    click.echo("\nGenerating image...")
     fig = generate_figure(contributors, ncols=ncols)
+
+    # Save image
     fig.savefig(image, dpi=72, bbox_inches="tight", pad_inches=0.1)
-    click.echo(f"Done! 🎉 Collage image saved in {image}")
+    click.echo(f"\nDone! 🎉 Collage image saved in {image}")

@@ -1,7 +1,6 @@
 """
 Functions to build the collage of contributors
 """
-import sys
 import re
 import numpy as np
 import matplotlib.pyplot as plt

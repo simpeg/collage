@@ -1,0 +1,37 @@
+[project]
+name = "collage"
+description = "Collage of SimPEG contributors"
+dynamic = ["version"]
+authors = [
+    {name ="Santiago Soler", email="santisoler@fastmail.com"}
+]
+maintainers = [
+    {name ="Santiago Soler", email="santisoler@fastmail.com"}
+]
+readme="README.md"
+license = {text="MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "requests",
+    "click",
+    "numpy",
+    "matplotlib",
+]
+
+[project.scripts]
+collage = "collage.cli:cli"
+
+[build-system]
+requires = ["setuptools>=61", "wheel", "setuptools_scm[toml]>=8.0.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "node-and-date"
+write_to = "collage/_version.py"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["collage*"]
+exclude = []  # empty by default
+namespaces = true  # true by default

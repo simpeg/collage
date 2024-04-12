@@ -1,0 +1,7 @@
+__pycache__
+._mypy_cache
+.ipynb_checkpoints
+*.egg-info
+benchmarker/_version.py
+*.swp
+*.un~

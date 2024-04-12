@@ -43,6 +43,12 @@ import requests
     help="Number of columns used in the collage picture",
 )
 @click.option(
+    "--dpi",
+    default=72,
+    show_default=True,
+    help="DPI for the output image.",
+)
+@click.option(
     "--gh-username",
     default=None,
     show_default=True,
@@ -62,6 +68,7 @@ def cli(
     extend_ignore,
     include,
     ncols,
+    dpi,
     gh_username,
     gh_token,
 ):
@@ -123,5 +130,5 @@ def cli(
     fig = generate_figure(contributors, ncols=ncols)
 
     # Save image
-    fig.savefig(image, dpi=72, bbox_inches="tight", pad_inches=0.1)
+    fig.savefig(image, dpi=dpi, bbox_inches="tight", pad_inches=0.1)
     click.echo(f"\nDone! 🎉 Collage image saved in '{image.name}'.")

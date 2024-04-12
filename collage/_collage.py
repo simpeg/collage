@@ -32,14 +32,13 @@ def get_authors(organization, repo, authors_fname="AUTHORS.rst"):
     return authors
 
 
-def generate_figure(contributors):
+def generate_figure(contributors, ncols=7):
     # Rows and columns size
-    n_cols = 8
-    n_rows = int(np.ceil(len(contributors) / n_cols))
-    figsize = (4 * n_cols, 4 * n_rows)
+    n_rows = int(np.ceil(len(contributors) / ncols))
+    figsize = (4 * ncols, 4 * n_rows)
 
     # Make the figure
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=figsize)
+    fig, axes = plt.subplots(n_rows, ncols, figsize=figsize)
     for ax in axes.ravel():
         ax.set_axis_off()
     for contributor, ax in zip(contributors, axes.ravel()):

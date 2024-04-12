@@ -33,7 +33,7 @@ def get_authors(organization, repo, authors_fname="AUTHORS.rst"):
     return authors
 
 
-def generate_figure(contributors, ncols=7):
+def generate_figure(contributors, ncols=7, title_fontsize=18):
     # Rows and columns size
     n_rows = int(np.ceil(len(contributors) / ncols))
     figsize = (4 * ncols, 4 * n_rows)
@@ -46,5 +46,5 @@ def generate_figure(contributors, ncols=7):
         url = f"https://github.com/{contributor}.png"
         image = np.array(Image.open(request.urlopen(url)))
         ax.imshow(image)
-        ax.set(title=contributor)
+        ax.set_title(contributor, fontsize=title_fontsize)
     return fig

@@ -49,6 +49,12 @@ import requests
     help="DPI for the output image.",
 )
 @click.option(
+    "--fontsize",
+    default=18,
+    show_default=True,
+    help="Fontsize for contributors names.",
+)
+@click.option(
     "--gh-username",
     default=None,
     show_default=True,
@@ -69,6 +75,7 @@ def cli(
     include,
     ncols,
     dpi,
+    fontsize,
     gh_username,
     gh_token,
 ):
@@ -127,7 +134,7 @@ def cli(
 
     # Generate image
     click.echo("\nGenerating image...")
-    fig = generate_figure(contributors, ncols=ncols)
+    fig = generate_figure(contributors, ncols=ncols, title_fontsize=fontsize)
 
     # Save image
     fig.savefig(image, dpi=dpi, bbox_inches="tight", pad_inches=0.1)

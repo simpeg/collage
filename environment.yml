@@ -1,4 +1,4 @@
-name: simpeg-contributors
+name: collage
 channels:
   - conda-forge
 dependencies:

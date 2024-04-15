@@ -27,7 +27,13 @@ Running this helped to generate a nice looking and updated version of the
 SimPEG contributors:
 
 ```sh
-collage --extend-ignore "thibaut-kobold,cgohlke" --include "leonfoks" --ncols 8 --fontsize 24 image.png
+collage \
+  --extend-ignore thibaut-kobold \
+  --extend-ignore cgohlke \
+  --include leonfoks \
+  --ncols 8 \
+  --fontsize 24 \
+  image.png
 ```
 
 ## License

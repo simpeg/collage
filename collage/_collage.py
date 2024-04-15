@@ -9,8 +9,24 @@ from PIL import Image
 from urllib import request
 
 
-def get_contributors(organization, repository, github_username=None, github_token=None):
-    url = f"https://api.github.com/repos/{organization}/{repository}/contributors"
+def get_contributors(
+    organization,
+    repository,
+    github_username=None,
+    github_token=None,
+    contributors_per_page=1000,
+):
+    if not isinstance(contributors_per_page, int):
+        raise ValueError(
+            f"Invalid 'contributors_per_page' of type {type(contributors_per_page)}."
+            "It must be an int."
+        )
+    url = (
+        "https://api.github.com/repos/"
+        f"{organization}/"
+        f"{repository}/"
+        f"contributors?per_page={contributors_per_page}"
+    )
     auth = None
     if github_username is not None and github_token is not None:
         auth = (github_username, github_token)

@@ -72,6 +72,16 @@ import requests
     show_default=True,
     help="GitHub token for the passed GitHub username.",
 )
+@click.option(
+    "--contributors-per-page",
+    default=1000,
+    show_default=True,
+    help=(
+        "Number of contributors that will be requested to GitHub. "
+        "Make sure this number is higher than the amount of contributors to "
+        "the repository."
+    ),
+)
 def cli(
     image,
     organization,
@@ -84,6 +94,7 @@ def cli(
     fontsize,
     gh_username,
     gh_token,
+    contributors_per_page,
 ):
     from ._collage import get_contributors, get_authors, generate_figure  # lazy imports
 
@@ -108,7 +119,13 @@ def cli(
     # Get contributors
     contributors = []
     for repo in repositories:
-        contributors += get_contributors(organization, repo, gh_username, gh_token)
+        contributors += get_contributors(
+            organization,
+            repo,
+            gh_username,
+            gh_token,
+            contributors_per_page=contributors_per_page,
+        )
     contributors = set(contributors)
 
     # Get authors

@@ -1,5 +1,8 @@
+import os
 import click
 import requests
+
+IGNORE = set(["quantifiedcode-bot"])
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
@@ -21,26 +24,19 @@ import requests
 )
 @click.option(
     "--ignore",
-    multiple=True,
-    default=["quantifiedcode-bot"],
-    show_default=True,
-    help="Ignore these contributors, don't add them to the collage",
-)
-@click.option(
-    "--extend-ignore",
-    "-e",
+    "-a",
     multiple=True,
     default=None,
     show_default=True,
-    help="Extend the list of ignored contributors",
+    help="Ignore this contributor from the collage.",
 )
 @click.option(
-    "--include",
-    "-i",
+    "--add",
+    "-a",
     multiple=True,
     default=None,
     show_default=True,
-    help="Include these contributors to the collage",
+    help="Add this contributor to the collage.",
 )
 @click.option(
     "--ncols",
@@ -87,8 +83,7 @@ def cli(
     organization,
     repositories,
     ignore,
-    extend_ignore,
-    include,
+    add,
     ncols,
     dpi,
     fontsize,
@@ -98,6 +93,13 @@ def cli(
 ):
     from ._collage import get_contributors, get_authors, generate_figure  # lazy imports
 
+    # Get default list of ignored contributors from the global variable or from
+    # an env variable
+    if (key := "COLLAGE_IGNORE") in os.environ:
+        default_ignore = set([c.strip() for c in os.environ[key].split(",")])
+    else:
+        default_ignore = IGNORE
+
     # Sanitize inputs
     repositories = [r.strip() for r in repositories]
 
@@ -105,16 +107,12 @@ def cli(
         ignore = set()
     else:
         ignore = set([c.strip() for c in ignore])
-    if extend_ignore is None:
-        extend_ignore = set()
-    else:
-        extend_ignore = set([c.strip() for c in extend_ignore])
-    ignore_contributors = ignore | extend_ignore  # union of the two sets
+    ignore |= default_ignore  # union of the two sets
 
-    if include is None:
-        include = set()
+    if add is None:
+        add = set()
     else:
-        include = set([c.strip() for c in include])
+        add = set([c.strip() for c in add])
 
     # Get contributors
     contributors = []
@@ -143,10 +141,10 @@ def cli(
     contributors |= authors  # union of the two sets
 
     # Remove unwanted ones
-    contributors -= ignore_contributors  # remove contributors that should be ignored
+    contributors -= ignore  # remove contributors that should be ignored
 
     # Add required ones
-    contributors |= include
+    contributors |= add
 
     # Sort them with a case-insensitive manner
     contributors = list(contributors)

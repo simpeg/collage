@@ -28,9 +28,9 @@ SimPEG contributors:
 
 ```sh
 collage \
-  --extend-ignore thibaut-kobold \
-  --extend-ignore cgohlke \
-  --include leonfoks \
+  --ignore thibaut-kobold \
+  --ignore cgohlke \
+  --add leonfoks \
   --ncols 8 \
   --fontsize 24 \
   image.png

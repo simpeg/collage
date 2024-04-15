@@ -14,24 +14,30 @@ import requests
 @click.option(
     "--repositories",
     "-r",
-    default="simpeg,discretize,pydiso,geoana,aurora,pymatsolver",
+    multiple=True,
+    default=["simpeg", "discretize", "pydiso", "geoana", "aurora", "pymatsolver"],
     show_default=True,
     help="List of repositories",
 )
 @click.option(
     "--ignore",
-    default="quantifiedcode-bot",
+    multiple=True,
+    default=["quantifiedcode-bot"],
     show_default=True,
-    help="Ignore this contributors, don't add them to the collage",
+    help="Ignore these contributors, don't add them to the collage",
 )
 @click.option(
     "--extend-ignore",
+    "-e",
+    multiple=True,
     default=None,
     show_default=True,
     help="Extend the list of ignored contributors",
 )
 @click.option(
     "--include",
+    "-i",
+    multiple=True,
     default=None,
     show_default=True,
     help="Include these contributors to the collage",
@@ -93,22 +99,22 @@ def cli(
     from ._collage import get_contributors, get_authors, generate_figure  # lazy imports
 
     # Sanitize inputs
-    repositories = [r.strip() for r in repositories.split(",")]
+    repositories = [r.strip() for r in repositories]
 
     if ignore is None:
         ignore = set()
     else:
-        ignore = set([c.strip() for c in ignore.split(",")])
+        ignore = set([c.strip() for c in ignore])
     if extend_ignore is None:
         extend_ignore = set()
     else:
-        extend_ignore = set([c.strip() for c in extend_ignore.split(",")])
+        extend_ignore = set([c.strip() for c in extend_ignore])
     ignore_contributors = ignore | extend_ignore  # union of the two sets
 
     if include is None:
         include = set()
     else:
-        include = set([c.strip() for c in include.split(",")])
+        include = set([c.strip() for c in include])
 
     # Get contributors
     contributors = []

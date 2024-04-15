@@ -24,7 +24,7 @@ IGNORE = set(["quantifiedcode-bot"])
 )
 @click.option(
     "--ignore",
-    "-a",
+    "-i",
     multiple=True,
     default=None,
     show_default=True,
